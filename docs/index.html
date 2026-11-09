@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang='en' data-theme='dark'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>OpenHands Artifacts - every file your agent made, in one place</title>
+<meta name='description' content='A free, MIT-licensed app for OpenHands Agent Canvas that lists every file your conversations created, edited or mentioned, with one-click download and preview.'>
+<style>
+:root{--bg:#0b0e14;--bg2:#11151d;--panel:#171c26;--panel2:#1f2532;--line:#2b3242;--text:#e9edf5;--muted:#9aa6bb;--accent:#f3ce49;--accent-ink:#171717;--blue:#6ea8fe;--green:#4cc38a;--violet:#c7a2ff;--cyan:#8fd3ff;--amber:#ffd166;--red:#ef6b73;--glow:rgba(243,206,73,.16)}
+[data-theme=light]{--bg:#f6f7fb;--bg2:#eef0f6;--panel:#ffffff;--panel2:#f1f3f8;--line:#dde1ea;--text:#171b24;--muted:#586277;--accent:#171b24;--accent-ink:#ffffff;--blue:#2f6fe4;--green:#1f9d61;--violet:#7a3fd1;--cyan:#0b7a9e;--amber:#a3620a;--red:#c93b45;--glow:rgba(47,111,228,.14)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.bg i{position:absolute;border-radius:50%;filter:blur(90px);animation:float 18s ease-in-out infinite}
+.bg i:nth-child(1){width:520px;height:520px;left:-120px;top:-120px;background:var(--glow)}
+.bg i:nth-child(2){width:460px;height:460px;right:-100px;top:240px;background:rgba(110,168,254,.12);animation-delay:-6s}
+.bg i:nth-child(3){width:420px;height:420px;left:35%;bottom:-160px;background:rgba(199,162,255,.10);animation-delay:-12s}
+@keyframes float{50%{transform:translate(40px,30px) scale(1.08)}}
+nav.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:18px;height:62px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}
+.logo b{width:30px;height:30px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:16px}
+nav.top .links{margin-left:auto;display:flex;gap:6px;align-items:center}
+nav.top .links a.h{padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:14px}
+nav.top .links a.h:hover{color:var(--text);background:var(--panel)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);padding:10px 16px;border-radius:10px;font:inherit;font-size:15px;cursor:pointer;text-decoration:none;transition:transform .15s,border-color .15s,background .15s}
+.btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent;font-weight:650}
+.btn.sm{padding:7px 12px;font-size:14px}
+.hero{padding:72px 0 40px;text-align:center}
+.pill{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--panel);padding:6px 14px;border-radius:999px;font-size:13px;color:var(--muted)}
+.pill em{font-style:normal;color:var(--green)}
+h1{font-size:clamp(36px,6vw,64px);line-height:1.05;margin:20px auto 16px;max-width:820px;letter-spacing:-.02em}
+h1 span{background:linear-gradient(90deg,var(--accent),var(--blue),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+[data-theme=light] h1 span{background:linear-gradient(90deg,#2f6fe4,#7a3fd1);-webkit-background-clip:text;background-clip:text}
+.lead{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:660px;margin:0 auto 28px}
+.install{display:flex;gap:8px;max-width:560px;margin:0 auto 14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 6px 6px 16px;align-items:center;text-align:left}
+.install code{flex:1;font:14px ui-monospace,Consolas,monospace;overflow-x:auto;white-space:nowrap}
+.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.badges{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:22px}
+section{padding:64px 0}
+.eyebrow{color:var(--accent);font-weight:650;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+[data-theme=light] .eyebrow{color:var(--blue)}
+h2{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:8px 0 12px;letter-spacing:-.01em}
+.sub{color:var(--muted);max-width:640px;margin:0 0 28px}
+.head{text-align:center}.head .sub{margin-left:auto;margin-right:auto}
+.win{border:1px solid var(--line);border-radius:16px;background:var(--bg2);box-shadow:0 30px 80px rgba(0,0,0,.35);overflow:hidden}
+.bar{display:flex;gap:7px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--panel)}
+.bar i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.bar span{margin-left:10px;color:var(--muted);font-size:12px}
+.app{display:grid;grid-template-columns:200px 1fr;min-height:520px}
+.side{border-right:1px solid var(--line);padding:14px 10px;background:var(--panel)}
+.side a{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:8px;color:var(--muted);font-size:14px;text-decoration:none;margin-bottom:2px;cursor:default}
+.side a.on{background:var(--panel2);color:var(--text);box-shadow:inset 3px 0 0 var(--accent)}
+.side hr{border:0;border-top:1px solid var(--line);margin:12px 4px}
+.side .recent{font-size:12px;color:var(--muted);padding:4px 10px}
+.main{padding:16px;min-width:0}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.tools input[type=search],.tools select{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:8px;height:36px;padding:0 12px;font:inherit;font-size:14px}
+.tools input[type=search]{flex:1 1 180px;min-width:140px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:4px 11px;font:inherit;font-size:12px;cursor:pointer;transition:all .15s}
+.chip[aria-pressed=true]{color:var(--c);border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent)}
+.chk{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--muted);cursor:pointer}
+.summary{font-size:13px;color:var(--muted);margin:2px 0 10px}
+.tw{border:1px solid var(--line);border-radius:12px;overflow:auto;background:var(--panel);max-height:380px}
+table{width:100%;border-collapse:collapse;min-width:680px;font-size:14px}
+th{position:sticky;top:0;background:var(--panel);text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--line);z-index:1}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.row{cursor:pointer;transition:background .12s}
+tr.row:hover,tr.row.sel{background:var(--panel2)}
+tr.row.sel{box-shadow:inset 3px 0 0 var(--accent)}
+tr.row.gone{opacity:.55}
+tr.row.fresh{animation:flash 1.8s ease-out}
+@keyframes flash{from{background:var(--glow)}}
+tr.grp td{background:var(--panel2);font-weight:650;font-size:13px}
+.nm{font-weight:600}.pth{display:block;font:12px ui-monospace,Consolas,monospace;color:var(--muted);margin-top:2px;word-break:break-all}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:999px;border:1px solid var(--c);color:var(--c);margin:0 4px 2px 0;white-space:nowrap}
+.k-uploaded{--c:var(--violet)}.k-created{--c:var(--green)}.k-edited{--c:var(--blue)}.k-written{--c:var(--cyan)}.k-mentioned{--c:var(--muted)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.dot.ok{background:var(--green)}.dot.warn{background:var(--amber)}.dot.bad{background:var(--red)}
+.actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.actions .hint{color:var(--muted);font-size:13px;margin-left:auto}
+.empty{padding:36px;text-align:center;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--panel);border:1px solid var(--line);padding:11px 16px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.4);transition:all .25s;z-index:60;max-width:90vw}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--text);max-width:640px;width:92vw;padding:0}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+dialog header b{flex:1;word-break:break-all}
+dialog pre{margin:0;padding:16px;overflow:auto;max-height:55vh;font:13px/1.55 ui-monospace,Consolas,monospace;white-space:pre-wrap}
+.note{color:var(--muted);font-size:12px;text-align:center;margin-top:10px}
+.lab{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:stretch}
+.card{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:20px}
+.ev{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:10px;padding:10px 12px;margin-bottom:8px;font:13px ui-monospace,Consolas,monospace;cursor:pointer;transition:all .15s}
+.ev small{display:block;font:11px system-ui,sans-serif;color:var(--muted);margin-bottom:3px;letter-spacing:.05em;text-transform:uppercase}
+.ev:hover{border-color:var(--accent)}
+.ev[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+.result{display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:240px}
+.result .file{font:600 20px ui-monospace,Consolas,monospace;word-break:break-all}
+.result p{margin:0;color:var(--muted)}
+.arrow{color:var(--accent);font-size:26px}
+.steps{display:grid;grid-template-columns:260px 1fr;gap:20px}
+.tabs{display:flex;flex-direction:column;gap:8px}
+.tab{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:12px;padding:12px 14px;font:inherit;cursor:pointer;transition:all .15s}
+.tab b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font-size:13px;flex:none}
+.tab[aria-selected=true]{color:var(--text);border-color:var(--accent);background:var(--panel2)}
+.tab[aria-selected=true] b{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.pane{min-height:300px;display:flex;flex-direction:column}
+.pane h3{margin:0 0 8px;font-size:22px}
+.pane p{color:var(--muted);margin:0}
+.mini{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:14px;margin-top:14px;font-size:14px}
+.mini .row{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);margin-bottom:6px}
+.mini code{font:13px ui-monospace,Consolas,monospace}
+.tog{margin-left:auto;width:38px;height:22px;border-radius:999px;background:var(--line);position:relative;transition:background .4s;flex:none}
+.tog::after{content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .4s}
+.tog.on{background:var(--green)}.tog.on::after{left:19px}
+.pn{display:flex;gap:8px;margin-top:auto;padding-top:16px;align-items:center}
+.prog{height:4px;background:var(--line);border-radius:4px;overflow:hidden;flex:1}
+.prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.feat{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:20px;transition:transform .2s,border-color .2s}
+.feat:hover{transform:translateY(-3px);border-color:var(--accent)}
+.feat .ic{font-size:26px}.feat h3{margin:10px 0 6px;font-size:17px}.feat p{margin:0;color:var(--muted);font-size:14px}
+.trust{border:1px solid var(--amber);background:color-mix(in srgb,var(--amber) 10%,transparent);border-radius:16px;padding:20px 24px}
+.trust h3{margin:0 0 6px}.trust p{margin:0;color:var(--muted)}
+details{border:1px solid var(--line);border-radius:12px;background:var(--panel);margin-bottom:10px;padding:0 16px}
+summary{cursor:pointer;padding:14px 0;font-weight:600}
+details p{margin:0 0 14px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:820px){.app{grid-template-columns:1fr}.side{display:none}.lab,.steps{grid-template-columns:1fr}.tabs{flex-direction:row;overflow-x:auto}.tab span{display:none}nav.top .links a.h{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body id='top'>
+<div class='bg' aria-hidden='true'><i></i><i></i><i></i></div>
+<nav class='top'><div class='wrap'>
+  <a class='logo' href='#top'><b>&#9638;</b>Artifacts</a>
+  <div class='links'>
+    <a class='h' href='#demo'>Live demo</a><a class='h' href='#how'>How it works</a><a class='h' href='#install'>Install</a><a class='h' href='#faq'>FAQ</a>
+    <button class='btn sm' id='theme' type='button' aria-label='Switch between light and dark theme'>&#9680;</button>
+    <a class='btn sm primary' data-repo href='#'>GitHub</a>
+  </div>
+</div></nav>
+
+<header class='hero wrap'>
+  <span class='pill'><em>&#9679;</em> Free app for OpenHands Agent Canvas &middot; MIT licensed</span>
+  <h1>Every file your agent made. <span>One click away.</span></h1>
+  <p class='lead'>Artifacts adds a page under <strong>Automate</strong> that lists every file your conversations uploaded, created, edited or mentioned, so you can find, preview and download them without digging through chats.</p>
+  <div class='install'><code data-src></code><button class='btn primary sm' type='button' data-copy>Copy</button></div>
+  <div class='cta'><a class='btn' href='#demo'>Try the live demo &darr;</a><a class='btn' href='#install'>Install in 5 steps</a></div>
+  <div class='badges'><span>&#10003; One file, no dependencies</span><span>&#10003; Read-only: never changes your files</span><span>&#10003; No extra server to run</span><span>&#10003; Free and open source</span></div>
+</header>
+
+<section id='demo'><div class='wrap'>
+  <div class='head reveal'><div class='eyebrow'>Live demo</div><h2>Poke around the real thing</h2><p class='sub'>This is a working replica of the Artifacts page with made-up sample files. Search, filter, group, preview, and watch new files arrive.</p></div>
+  <div class='win reveal'>
+    <div class='bar'><i></i><i></i><i></i><span>Agent Canvas &middot; Artifacts (demo data)</span></div>
+    <div class='app'>
+      <aside class='side'>
+        <a>&#9998; New Chat</a><a>&#9881; Customize</a><a>&#9201; Automate</a><a class='on' aria-current='page'>&#9638; Artifacts</a>
+        <hr><div class='recent'>Recent</div><a>Weekly meal planner</a><a>Fractions unit</a><a>Extension fixes</a>
+      </aside>
+      <div class='main'>
+        <div class='tools'>
+          <input type='search' id='q' placeholder='Filter by name, path or conversation' aria-label='Filter files'>
+          <select id='ord' aria-label='Sort order'><option value='asc'>Oldest first</option><option value='desc'>Newest first</option></select>
+          <label class='chk'><input type='checkbox' id='grp'> Group by conversation</label>
+          <label class='chk'><input type='checkbox' id='hid'> Hide missing</label>
+        </div>
+        <div class='tools' id='chips' role='group' aria-label='Filter by how the file appeared'></div>
+        <div class='summary' id='sum' aria-live='polite'></div>
+        <div class='tw'><table><thead><tr><th>First seen</th><th>File</th><th>How it appeared</th><th>Conversation</th><th>Where it is</th><th>Size</th></tr></thead><tbody id='rows'></tbody></table><div class='empty' id='empty' hidden>No files match these filters.</div></div>
+        <div class='actions'>
+          <button class='btn sm' type='button' id='bPrev'>Preview</button><button class='btn sm' type='button' id='bDl'>Download</button><button class='btn sm' type='button' id='bCp'>Copy path</button>
+          <button class='btn sm primary' type='button' id='bLive'>&#9654; Simulate agent activity</button>
+          <span class='hint'>Click a row to select it, double-click to preview.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class='note'>Sample data only. The real page reads your own conversations through Agent Canvas.</p>
+</div></section>
+
+<section id='how'><div class='wrap'>
+  <div class='head reveal'><div class='eyebrow'>How it works</div><h2>It reads what your agent did</h2><p class='sub'>Artifacts looks through each conversation for signs that a file was involved. Pick an event to see what it finds.</p></div>
+  <div class='lab reveal'>
+    <div class='card'><div id='evs'></div></div>
+    <div class='card result' aria-live='polite' id='res'></div>
+  </div>
+</div></section>
+
+<section id='install'><div class='wrap'>
+  <div class='head reveal'><div class='eyebrow'>Install</div><h2>Five steps, about a minute</h2><p class='sub'>Step through it here. Nothing on this page touches your Agent Canvas.</p></div>
+  <div class='steps reveal'>
+    <div class='tabs' role='tablist' id='tabs'></div>
+    <div class='card pane' id='pane' role='tabpanel' aria-live='polite'></div>
+  </div>
+</div></section>
+
+<section><div class='wrap'>
+  <div class='head reveal'><div class='eyebrow'>Features</div><h2>Small app, useful details</h2></div>
+  <div class='grid reveal'>
+    <div class='feat'><div class='ic'>&#128269;</div><h3>Finds files for you</h3><p>Uploads, file-editor creates and edits, shell redirections, archives, downloads, screenshots and paths named by the agent.</p></div>
+    <div class='feat'><div class='ic'>&#127899;</div><h3>Filter and group</h3><p>Search by name, path or conversation, filter by how the file appeared, or group everything by conversation.</p></div>
+    <div class='feat'><div class='ic'>&#128229;</div><h3>Download and preview</h3><p>Pull any file that still exists out of the sandbox. Text opens as plain text, never as a web page.</p></div>
+    <div class='feat'><div class='ic'>&#128230;</div><h3>Container-only warning</h3><p>See which files live only inside the sandbox, so you can save them before it is cleaned up.</p></div>
+    <div class='feat'><div class='ic'>&#9889;</div><h3>Fast rescans</h3><p>Remembers what it already read and only fetches new events. Refreshes every minute while the tab is visible.</p></div>
+    <div class='feat'><div class='ic'>&#129513;</div><h3>Nothing else to run</h3><p>It is an Agent Canvas App: one JavaScript file, no helper server, no launcher.</p></div>
+  </div>
+</div></section>
+
+<section><div class='wrap'>
+  <div class='trust reveal'><h3>&#9888; Only enable apps you trust</h3><p>An enabled Agent Canvas App runs JavaScript inside Canvas and can make authenticated requests to your Agent Server. Artifacts is a single readable file: <a data-source-link href='#'>review the source</a> before you enable it. It only reads conversation events and files, and uninstalling it removes just the app.</p></div>
+</div></section>
+
+<section id='faq'><div class='wrap'>
+  <div class='head reveal'><div class='eyebrow'>FAQ</div><h2>Good questions</h2></div>
+  <div class='reveal' style='max-width:760px;margin:0 auto'>
+    <details><summary>Does it change or delete my files?</summary><p>No. It reads conversation history and file contents through your Agent Server and shows them. Uninstalling removes only the app itself.</p></details>
+    <details><summary>Where does it run?</summary><p>In your browser, inside Agent Canvas, as an OpenHands App. There is no separate server or launcher to start.</p></details>
+    <details><summary>Can it open a file in my computer&rsquo;s file manager?</summary><p>No. A browser app cannot reach your computer&rsquo;s file system, so it offers download and in-browser preview instead. An older standalone helper from the same project could open Explorer, but it is a separate tool.</p></details>
+    <details><summary>What about very large files?</summary><p>Files are read from the sandbox in 384 KB pieces and reassembled in your browser. Very large files have not been tested yet.</p></details>
+    <details><summary>Does it work with cloud backends?</summary><p>Agent Canvas Apps currently run against local backends, so Artifacts does too.</p></details>
+    <details><summary>How do I update it?</summary><p>The Apps screen has no refresh button yet. Uninstall Artifacts and add it again with the same source.</p></details>
+    <details><summary>What is the license?</summary><p>MIT. Use it, change it and share it.</p></details>
+  </div>
+</div></section>
+
+<footer><div class='wrap'>
+  <span>OpenHands Artifacts &middot; MIT License</span>
+  <a data-repo href='#'>GitHub</a><a data-source-link href='#'>Source</a>
+  <span style='margin-left:auto'>Independent community project, not an official OpenHands product.</span>
+</div></footer>
+
+<dialog id='dlg'><header><b id='dT'></b><button class='btn sm' type='button' id='dX'>Close</button></header><pre id='dP'></pre></dialog>
+<div class='toast' id='toast' role='status'></div>
+
+<script>
+(function(){
+'use strict';
+var SRC='github:David2me/openhands-artifacts';
+var REPO='https://github.com/David2me/openhands-artifacts';
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function h(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+var toastEl=$('#toast'),tt=0;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){toastEl.classList.remove('show')},3400)}
+function copy(text,btn){
+  function ok(){toast('Copied: '+text);if(btn){var o=btn.textContent;btn.textContent='Copied';setTimeout(function(){btn.textContent=o},1800)}}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(ok,function(){toast('Select the text and press Ctrl+C')})}else{toast('Select the text and press Ctrl+C')}
+}
+function wire(root){
+  $$('[data-repo]',root).forEach(function(a){a.href=REPO});
+  $$('[data-source-link]',root).forEach(function(a){a.href=REPO+'/blob/main/extension.js'});
+  $$('[data-src]',root).forEach(function(e){e.textContent=SRC});
+  $$('[data-copy]',root).forEach(function(b){b.addEventListener('click',function(){copy(SRC,b)})});
+}
+wire(document);
+
+var root=document.documentElement;
+try{var saved=localStorage.getItem('oha-theme');if(saved){root.setAttribute('data-theme',saved)}else if(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches){root.setAttribute('data-theme','light')}}catch(e){}
+$('#theme').addEventListener('click',function(){var n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('oha-theme',n)}catch(e){}});
+
+var KL={uploaded:'Uploaded by you',created:'Created',edited:'Edited',written:'Written by a command',mentioned:'Mentioned'};
+var KO=['uploaded','created','edited','written','mentioned'];
+var CV={a:'Weekly meal planner',b:'Fractions unit for grade 4',c:'Safe-search extension fixes'};
+var WH={proj:['ok','In /projects (synced to your PC)'],cont:['warn','Container only'],gone:['bad','Missing (sandbox cleaned)']};
+var NL='\n';
+var FILES=[
+ {n:'lesson-plan.docx',p:'/workspace/uploads/lesson-plan.docx',k:['uploaded'],c:'b',t:'Nov 4 8:02 AM',w:'proj',s:'48 KB'},
+ {n:'fractions-worksheet.md',p:'/workspace/fractions/fractions-worksheet.md',k:['created','edited'],c:'b',t:'Nov 4 8:10 AM',w:'cont',s:'3.1 KB',x:['# Fractions practice (grade 4)','','1. Shade 3/4 of the circle.','2. Which is larger, 2/3 or 3/5?','3. Add 1/2 + 1/4.'].join(NL)},
+ {n:'answer-key.csv',p:'/workspace/fractions/answer-key.csv',k:['written'],c:'b',t:'Nov 4 8:14 AM',w:'cont',s:'1.2 KB',x:['question,answer','1,shade 3 of 4 parts','2,2/3','3,3/4'].join(NL)},
+ {n:'meal-planner.py',p:'/workspace/meals/meal-planner.py',k:['created','edited'],c:'a',t:'Nov 5 6:30 PM',w:'cont',s:'5.4 KB',x:['import json, random','','def plan(recipes, days=7):','    return random.sample(recipes, days)','','if __name__ == main_guard:','    print(plan(json.load(open(recipes.json))))'].join(NL)},
+ {n:'shopping-list.txt',p:'/projects/meals/shopping-list.txt',k:['written'],c:'a',t:'Nov 5 6:41 PM',w:'proj',s:'0.6 KB',x:['oats','bananas','lentils','spinach','olive oil'].join(NL)},
+ {n:'recipes.json',p:'/workspace/meals/recipes.json',k:['created'],c:'a',t:'Nov 5 6:44 PM',w:'cont',s:'12 KB',x:'[{name: Lentil soup, minutes: 35}, {name: Veggie stir fry, minutes: 20}]'},
+ {n:'content.js',p:'/workspace/ext/content.js',k:['edited'],c:'c',t:'Nov 7 2:05 PM',w:'cont',s:'9.8 KB',x:['// filters page text before it is shown','function isSafe(text) {','  return !blocklist.some(w => text.includes(w));','}'].join(NL)},
+ {n:'filters-test.log',p:'/tmp/filters-test.log',k:['written'],c:'c',t:'Nov 7 2:11 PM',w:'gone',s:'0 B'},
+ {n:'summary.md',p:'/workspace/ext/summary.md',k:['mentioned'],c:'c',t:'Nov 7 2:30 PM',w:'cont',s:'1.8 KB',x:['# What changed','- Tightened the blocklist match','- Added tests for edge cases'].join(NL)},
+ {n:'icons.zip',p:'/workspace/ext/icons.zip',k:['written'],c:'c',t:'Nov 7 2:34 PM',w:'cont',s:'220 KB'}
+];
+var LIVE=[
+ {n:'weekly-report.html',p:'/workspace/meals/weekly-report.html',k:['created'],c:'a',w:'cont',s:'7.3 KB',x:'<h1>Weekly report</h1> (shown as plain text, never rendered)'},
+ {n:'backup.tar.gz',p:'/workspace/backup.tar.gz',k:['written'],c:'a',w:'cont',s:'1.4 MB'},
+ {n:'next-steps.md',p:'/workspace/meals/next-steps.md',k:['mentioned'],c:'a',w:'cont',s:'0.9 KB',x:['# Next steps','- Try two new soups','- Update the shopping list'].join(NL)}
+];
+var st={q:'',kinds:{},group:false,hide:false,desc:false,sel:null,live:0};
+KO.forEach(function(k){st.kinds[k]=true});
+var tbody=$('#rows');
+
+var chips=$('#chips');
+KO.forEach(function(k){
+  var b=h('button','chip k-'+k,KL[k]);b.type='button';b.setAttribute('aria-pressed','true');
+  b.addEventListener('click',function(){st.kinds[k]=!st.kinds[k];b.setAttribute('aria-pressed',String(st.kinds[k]));render()});
+  chips.appendChild(b);
+});
+
+function rowFor(f){
+  var tr=h('tr','row'+(f.w==='gone'?' gone':'')+(st.sel===f.n?' sel':'')+(f.fresh?' fresh':''));
+  tr.tabIndex=0;tr.dataset.n=f.n;
+  tr.appendChild(h('td','',f.t));
+  var td=h('td');td.appendChild(h('span','nm',f.n));td.appendChild(h('span','pth',f.p));tr.appendChild(td);
+  td=h('td');f.k.forEach(function(k){td.appendChild(h('span','badge k-'+k,KL[k]))});tr.appendChild(td);
+  tr.appendChild(h('td','',CV[f.c]));
+  td=h('td');td.appendChild(h('span','dot '+WH[f.w][0]));td.appendChild(document.createTextNode(WH[f.w][1]));tr.appendChild(td);
+  tr.appendChild(h('td','',f.s));
+  function pick(){st.sel=f.n;$$('tr.row',tbody).forEach(function(r){r.classList.toggle('sel',r.dataset.n===f.n)})}
+  tr.addEventListener('click',pick);
+  tr.addEventListener('dblclick',function(){pick();preview(f)});
+  tr.addEventListener('keydown',function(e){if(e.key==='Enter'){pick();preview(f)}else if(e.key===' '){e.preventDefault();pick()}});
+  return tr;
+}
+function render(){
+  var q=st.q.trim().toLowerCase();
+  var list=FILES.filter(function(f){
+    return f.k.some(function(k){return st.kinds[k]})&&(!st.hide||f.w!=='gone')&&(!q||(f.n+' '+f.p+' '+CV[f.c]).toLowerCase().indexOf(q)>-1);
+  });
+  if(st.desc)list=list.slice().reverse();
+  tbody.textContent='';
+  if(st.group){
+    var order=[];list.forEach(function(f){if(order.indexOf(f.c)<0)order.push(f.c)});
+    order.forEach(function(c){
+      var items=list.filter(function(f){return f.c===c});
+      var tr=h('tr','grp'),td=h('td','',CV[c]+'  -  '+items.length+(items.length===1?' file':' files'));td.colSpan=6;tr.appendChild(td);tbody.appendChild(tr);
+      items.forEach(function(f){tbody.appendChild(rowFor(f))});
+    });
+  }else{list.forEach(function(f){tbody.appendChild(rowFor(f))})}
+  $('#empty').hidden=list.length>0;
+  var convs=[];list.forEach(function(f){if(convs.indexOf(f.c)<0)convs.push(f.c)});
+  $('#sum').textContent='Showing '+list.length+' of '+FILES.length+' files across '+convs.length+(convs.length===1?' conversation':' conversations');
+  FILES.forEach(function(f){f.fresh=false});
+}
+function current(){var f=FILES.filter(function(x){return x.n===st.sel})[0];if(!f)toast('Select a file first by clicking a row.');return f}
+function preview(f){
+  if(f.w==='gone'){toast('That file no longer exists in the sandbox.');return}
+  if(!f.x){toast(f.n+' is a binary file, so the real app downloads it instead of previewing.');return}
+  var d=$('#dlg');$('#dT').textContent=f.n;$('#dP').textContent=f.x;
+  if(d.showModal){d.showModal()}else{toast('Preview is not supported in this browser.')}
+}
+$('#dX').addEventListener('click',function(){$('#dlg').close()});
+$('#dlg').addEventListener('click',function(e){if(e.target===this)this.close()});
+$('#bPrev').addEventListener('click',function(){var f=current();if(f)preview(f)});
+$('#bDl').addEventListener('click',function(){var f=current();if(!f)return;if(f.w==='gone'){toast('That file no longer exists in the sandbox.');return}toast('Demo only: the real app saves '+f.n+' from your sandbox to your downloads.')});
+$('#bCp').addEventListener('click',function(){var f=current();if(f)copy(f.p)});
+$('#q').addEventListener('input',function(e){st.q=e.target.value;render()});
+$('#ord').addEventListener('change',function(e){st.desc=e.target.value==='desc';render()});
+$('#grp').addEventListener('change',function(e){st.group=e.target.checked;render()});
+$('#hid').addEventListener('change',function(e){st.hide=e.target.checked;render()});
+$('#bLive').addEventListener('click',function(){
+  var f=LIVE[st.live];if(!f)return;
+  f.t='Just now';f.fresh=true;FILES.push(f);st.live++;st.sel=f.n;
+  render();
+  var row=$$('tr.row',tbody).filter(function(r){return r.dataset.n===f.n})[0];
+  if(row){row.scrollIntoView({block:'nearest',behavior:'smooth'})}else{toast('A new file arrived, but your filters are hiding it.')}
+  if(!LIVE[st.live]){this.textContent='All caught up';this.disabled=true}
+});
+render();
+
+var EV=[
+ {src:'You attach a file',code:'NEW FILES ADDED: lesson-plan.docx',f:'lesson-plan.docx',k:['uploaded'],why:'Canvas adds a NEW FILES ADDED note to your message when you attach files.'},
+ {src:'Agent uses the file editor',code:'file_editor create /workspace/quiz.py',f:'quiz.py',k:['created'],why:'Creating a file with the editor tool is recorded as Created.'},
+ {src:'Agent edits a file',code:'file_editor str_replace /workspace/app.js',f:'app.js',k:['edited'],why:'Any other editor command on a file is recorded as Edited.'},
+ {src:'Agent runs a command',code:'python build.py > /tmp/report.csv',f:'report.csv',k:['written'],why:'Shell redirections, tee, cp, mv, zip, tar and curl -o targets count as files the command wrote.'},
+ {src:'Agent runs a command',code:'zip -r site.zip ./dist',f:'site.zip',k:['written'],why:'Archive outputs are caught too, so build results do not get lost.'},
+ {src:'Agent replies to you',code:'I saved the summary to /workspace/summary.md',f:'summary.md',k:['mentioned'],why:'Paths named in agent messages are listed as Mentioned, but only if the file still exists.'}
+];
+var evs=$('#evs'),res=$('#res');
+function showEv(i){
+  $$('.ev',evs).forEach(function(b,j){b.setAttribute('aria-pressed',String(i===j))});
+  var e=EV[i];res.textContent='';
+  res.appendChild(h('div','eyebrow','Artifacts finds'));
+  res.appendChild(h('div','arrow','\u2193'));
+  res.appendChild(h('div','file',e.f));
+  var d=h('div');e.k.forEach(function(k){d.appendChild(h('span','badge k-'+k,KL[k]))});res.appendChild(d);
+  res.appendChild(h('p','',e.why));
+}
+EV.forEach(function(e,i){
+  var b=h('button','ev');b.type='button';b.appendChild(h('small','',e.src));b.appendChild(document.createTextNode(e.code));
+  b.addEventListener('click',function(){showEv(i)});evs.appendChild(b);
+});
+showEv(0);
+
+var STEPS=[
+ {t:'Open Add app',d:'In Agent Canvas, go to Customize, then Apps, then choose Add app.',v:function(){return `<div class='mini'><div class='row'><span>Customize</span><span>&rsaquo;</span><span>Apps</span><span class='btn sm primary' style='margin-left:auto'>Add app</span></div></div>`}},
+ {t:'Paste the source',d:'Copy this into the App source field. Leave the other fields empty.',v:function(){return `<div class='mini'><div class='row'><code data-src></code><button class='btn sm primary' style='margin-left:auto' type='button' data-copy>Copy</button></div></div>`}},
+ {t:'Install it',d:'Choose install. The app is added in a disabled state, so nothing runs yet.',v:function(){return `<div class='mini'><div class='row'><strong>artifacts</strong><span>v0.1.0</span><span style='margin-left:auto;color:var(--muted)'>Disabled</span><span class='tog'></span></div></div>`}},
+ {t:'Review and enable',d:'Look over the source if you like, then turn it on and accept the trusted-code notice.',v:function(){return `<div class='mini'><div class='row'><strong>artifacts</strong><span>v0.1.0</span><span style='margin-left:auto;color:var(--muted)' id='sl'>Disabled</span><span class='tog' id='tg'></span></div><p style='font-size:13px'>This app runs trusted JavaScript inside Agent Canvas and can make authenticated requests to the active Agent Server.</p></div>`}},
+ {t:'Open Artifacts',d:'It appears in the sidebar right under Automate. No restart needed.',v:function(){return `<div class='mini'><div class='row'>Customize</div><div class='row'>Automate</div><div class='row' style='border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)'><strong>Artifacts</strong><span style='margin-left:auto;color:var(--green)'>&#10003; ready</span></div></div>`}}
+];
+var tabs=$('#tabs'),pane=$('#pane'),cur=0;
+STEPS.forEach(function(s,i){
+  var b=h('button','tab');b.type='button';b.setAttribute('role','tab');
+  b.appendChild(h('b','',String(i+1)));b.appendChild(h('span','',s.t));
+  b.addEventListener('click',function(){go(i)});tabs.appendChild(b);
+});
+function go(i){
+  cur=Math.max(0,Math.min(STEPS.length-1,i));var s=STEPS[cur];
+  $$('.tab',tabs).forEach(function(b,j){b.setAttribute('aria-selected',String(j===cur))});
+  pane.textContent='';
+  pane.appendChild(h('h3','',s.t));pane.appendChild(h('p','',s.d));
+  var box=h('div');box.innerHTML=s.v();pane.appendChild(box);wire(box);
+  var nav=h('div','pn');
+  var back=h('button','btn sm','Back');back.type='button';back.disabled=cur===0;back.addEventListener('click',function(){go(cur-1)});
+  var pr=h('div','prog');pr.appendChild(h('i'));
+  var nx=h('button','btn sm primary',cur===STEPS.length-1?'Restart':'Next');nx.type='button';nx.addEventListener('click',function(){go(cur===STEPS.length-1?0:cur+1)});
+  nav.appendChild(back);nav.appendChild(pr);nav.appendChild(nx);pane.appendChild(nav);
+  setTimeout(function(){$('i',pr).style.width=((cur+1)/STEPS.length*100)+'%'},30);
+  if(cur===3){setTimeout(function(){var tg=$('#tg'),sl=$('#sl');if(tg){tg.classList.add('on');sl.textContent='Enabled';sl.style.color='var(--green)'}},900)}
+}
+go(0);
+
+var rv=$$('.reveal');
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  rv.forEach(function(e){io.observe(e)});
+}else{rv.forEach(function(e){e.classList.add('in')})}
+})();
+</script>
+</body>
+</html>
