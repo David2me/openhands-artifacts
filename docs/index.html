@@ -3,6 +3,7 @@
 <head>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='color-scheme' content='dark light'>
 <title>OpenHands Artifacts - every file your agent made, in one place</title>
 <meta name='description' content='A free, MIT-licensed app for OpenHands Agent Canvas that lists every file your conversations created, edited or mentioned, with one-click download and preview.'>
 <style>
@@ -139,6 +140,10 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
 html[data-theme=dark] .btn.primary,html[data-theme=dark] .btn.primary:hover,html[data-theme=dark] .btn.primary:focus,html[data-theme=dark] .btn.primary:visited,html[data-theme=dark] .btn.primary:disabled,html[data-theme=dark] .logo b,html[data-theme=dark] .tab[aria-selected=true] b{color:#171717!important;text-shadow:none}
 html[data-theme=light] .btn.primary,html[data-theme=light] .btn.primary:hover,html[data-theme=light] .btn.primary:focus,html[data-theme=light] .btn.primary:visited,html[data-theme=light] .logo b,html[data-theme=light] .tab[aria-selected=true] b{color:#ffffff!important}
+
+:root[data-theme=dark]{color-scheme:dark}:root[data-theme=light]{color-scheme:light}
+html[data-theme=dark] .btn.primary,html[data-theme=dark] .btn.primary *,html[data-theme=dark] button.btn.primary,html[data-theme=dark] a.btn.primary,html[data-theme=dark] span.btn.primary,html[data-theme=dark] .logo b,html[data-theme=dark] .tab[aria-selected=true] b,html[data-theme=dark] .tab[aria-selected=true] b *{color:#262626!important;-webkit-text-fill-color:#262626!important;forced-color-adjust:none;text-shadow:none!important;opacity:1}
+html[data-theme=dark] .btn.primary:hover,html[data-theme=dark] .btn.primary:focus,html[data-theme=dark] .btn.primary:active,html[data-theme=dark] .btn.primary:disabled{color:#262626!important;-webkit-text-fill-color:#262626!important}
 </style>
 </head>
 <body id='top'>
@@ -239,7 +244,7 @@ html[data-theme=light] .btn.primary,html[data-theme=light] .btn.primary:hover,ht
 <footer><div class='wrap'>
   <span>OpenHands Artifacts &middot; MIT License</span>
   <a data-repo href='#'>GitHub</a><a data-source-link href='#'>Source</a>
-  <span style='margin-left:auto'>Independent community project, not an official OpenHands product.</span>
+  <span style='margin-left:auto'>Independent community project, not an official OpenHands product. &middot; Build: contrast-3</span>
 </div></footer>
 
 <dialog id='dlg'><header><b id='dT'></b><button class='btn sm' type='button' id='dX'>Close</button></header><pre id='dP'></pre></dialog>
