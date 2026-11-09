@@ -144,6 +144,11 @@ html[data-theme=light] .btn.primary,html[data-theme=light] .btn.primary:hover,ht
 :root[data-theme=dark]{color-scheme:dark}:root[data-theme=light]{color-scheme:light}
 html[data-theme=dark] .btn.primary,html[data-theme=dark] .btn.primary *,html[data-theme=dark] button.btn.primary,html[data-theme=dark] a.btn.primary,html[data-theme=dark] span.btn.primary,html[data-theme=dark] .logo b,html[data-theme=dark] .tab[aria-selected=true] b,html[data-theme=dark] .tab[aria-selected=true] b *{color:#262626!important;-webkit-text-fill-color:#262626!important;forced-color-adjust:none;text-shadow:none!important;opacity:1}
 html[data-theme=dark] .btn.primary:hover,html[data-theme=dark] .btn.primary:focus,html[data-theme=dark] .btn.primary:active,html[data-theme=dark] .btn.primary:disabled{color:#262626!important;-webkit-text-fill-color:#262626!important}
+
+.adbox{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;max-width:560px;margin:0 auto 8px;padding:10px 16px;border:1px dashed var(--line);border-radius:12px;background:var(--panel);color:var(--muted);font-size:13px}
+.adbox .adtag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);border-radius:4px;padding:1px 6px}
+.adbox a{color:var(--text);font-weight:650;text-decoration:underline;text-underline-offset:3px}
+.adbox a:hover{color:var(--blue)}
 </style>
 </head>
 <body id='top'>
@@ -241,10 +246,13 @@ html[data-theme=dark] .btn.primary:hover,html[data-theme=dark] .btn.primary:focu
   </div>
 </div></section>
 
+<section style='padding:24px 0 0'><div class='wrap'>
+  <div class='adbox' role='complementary' aria-label='Advertisement'><span class='adtag'>Ad</span><span>Check out</span><a href='https://geekbychoice.com' target='_blank' rel='sponsored noopener noreferrer'>GeekByChoice.com</a></div>
+</div></section>
 <footer><div class='wrap'>
   <span>OpenHands Artifacts &middot; MIT License</span>
   <a data-repo href='#'>GitHub</a><a data-source-link href='#'>Source</a>
-  <span style='margin-left:auto'>Independent community project, not an official OpenHands product. &middot; Build: contrast-4</span>
+  <span style='margin-left:auto'>Independent community project, not an official OpenHands product. &middot; Build: contrast-5</span>
 </div></footer>
 
 <dialog id='dlg'><header><b id='dT'></b><button class='btn sm' type='button' id='dX'>Close</button></header><pre id='dP'></pre></dialog>
