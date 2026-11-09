@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "name": "artifacts",
+  "display_name": "Artifacts",
+  "version": "0.1.0",
+  "description": "Every file your OpenHands conversations uploaded, created, edited or mentioned, in one place. Download or preview any of them straight from the container.",
+  "entrypoint": "extension.js",
+  "contributes": {
+    "pages": [
+      {
+        "id": "artifacts",
+        "title": "Artifacts",
+        "path": "/artifacts",
+        "nav_label": "Artifacts",
+        "description": "Files produced by your conversations"
+      }
+    ]
+  }
+}
